@@ -16,7 +16,21 @@ The datashape is 4324 rows × 9 columns
 
 Data Set found in Kaggle.
 https://www.kaggle.com/datasets/agirlcoding/all-space-missions-from-1957?datasetId=828921&sortBy=voteCount
-The datashape is 4324 rows × 9 columns
+
+Company name : The space organisation undertaking the mission
+
+Location : The point of spacecraft launch on earth
+
+Datum : Date and time of liftoff
+
+Detail : Name and type of the spaceship
+
+Status of rocket : Whether the space craft is still under commission and active in it's mission
+
+Rocket : Cost of the mission in million $
+
+Status Mission : Whether the mission was successful
+
 ## 2. Goal of the project
 With this final project for IronHack I want to show the skills I have learned for the last 6 months.
 I will be demonstrating Data Analysis skills in SQL, Python and Tableau and I will be using Machine learning techniques.
