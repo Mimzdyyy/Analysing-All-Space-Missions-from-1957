@@ -1,0 +1,80 @@
+SELECT name, sql FROM sqlite_master WHERE type='table' ;
+
+
+-- 1. Data cleaning:
+
+-- Replace missing values in the payload_weight_kg column with 0
+UPDATE space_missions
+SET payload_weight_kg = 0
+WHERE payload_weight_kg IS NULL;
+
+-- Remove outliers from the payload_weight_kg column
+DELETE FROM space_missions
+WHERE payload_weight_kg > (
+  SELECT AVG(payload_weight_kg) + 3*STDDEV(payload_weight_kg)
+  FROM space_missions
+);
+
+-- Convert the launch_date column to a date data type
+ALTER TABLE space_missions
+CHANGE launch_date launch_date DATE;
+
+
+-- 2. Data exploration:
+
+-- Show the distribution of launches by year
+SELECT YEAR(launch_date) AS year, COUNT(*) AS num_launches
+FROM space_missions
+GROUP BY year
+ORDER BY year;
+
+-- Compare success rate by country
+SELECT country, AVG(success) AS success_rate
+FROM space_missions
+GROUP BY country
+ORDER BY success_rate DESC;
+
+-- Find the average payload weight by rocket type
+SELECT rocket_type, AVG(payload_weight_kg) AS avg_payload_weight
+FROM space_missions
+GROUP BY rocket_type;
+
+
+-- 3. Data analysis:
+
+-- Find the top 5 countries by number of launches
+SELECT country, COUNT(*) AS num_launches
+FROM space_missions
+GROUP BY country
+ORDER BY num_launches DESC
+LIMIT 5;
+
+-- Calculate the average payload weight by rocket type
+SELECT rocket_type, AVG(payload_weight_kg) AS avg_payload_weight
+FROM space_missions
+GROUP BY rocket_type;
+
+-- Find the top 5 most successful rocket types
+SELECT rocket_type, COUNT(*) AS num_launches, AVG(success) AS success_rate
+FROM space_missions
+GROUP BY rocket_type
+HAVING AVG(success) = 1
+ORDER BY num_launches DESC
+LIMIT 5;
+
+
+
+
+-- 4. Data presentation:
+-- Use a line chart to show the distribution of launches by year.
+
+-- Use a bar chart to compare the success rate of launches by country.
+
+-- Use a pie chart to show the average payload weight by rocket type.
+
+-- Use text and tables to present the top 5 countries by number of launches,
+-- the average payload weight by rocket type, and the top 5 most successful rocket types.
+
+-- Provide examples of how your findings can be applied in the real world.
+
+-- Offer recommendations for future research or action based on your analysis.
